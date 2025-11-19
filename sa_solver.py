@@ -22,7 +22,12 @@ class GraphColoringSA:
         self.num_colors = num_colors
         self.vertices = list(graph.keys())
         self.colors = list(range(num_colors))
-        self.color_names = ['Red', 'Green', 'Blue', 'Yellow', 'Purple', 'Orange', 'Cyan', 'Magenta', 'Pink', 'Brown']
+        self.color_names = [
+            'Red', 'Green', 'Blue', 'Yellow', 'Purple', 'Orange', 'Cyan', 'Magenta', 'Pink', 'Brown',
+            'Lime', 'Teal', 'Navy', 'Maroon', 'Olive', 'Silver', 'Gold', 'Coral', 'Lavender', 'Turquoise',
+            'Indigo', 'Violet', 'Beige', 'Khaki', 'Salmon', 'Crimson', 'Aqua', 'Chartreuse', 'Fuchsia', 'Gray',
+            'DarkGreen', 'DarkBlue', 'DarkRed', 'DarkOrange', 'DarkViolet', 'LightBlue', 'LightGreen', 'LightPink', 'LightYellow', 'LightGray'
+        ]
     
     def initial_config(self, m: int) -> Dict[int, int]:
         """

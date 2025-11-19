@@ -20,7 +20,12 @@ class GraphColoringCSP:
         self.num_colors = num_colors
         self.vertices = sorted(graph.keys())
         self.colors = list(range(num_colors))
-        self.color_names = ['Red', 'Green', 'Blue', 'Yellow', 'Purple', 'Orange', 'Cyan', 'Magenta', 'Pink', 'Brown']
+        self.color_names = [
+            'Red', 'Green', 'Blue', 'Yellow', 'Purple', 'Orange', 'Cyan', 'Magenta', 'Pink', 'Brown',
+            'Lime', 'Teal', 'Navy', 'Maroon', 'Olive', 'Silver', 'Gold', 'Coral', 'Lavender', 'Turquoise',
+            'Indigo', 'Violet', 'Beige', 'Khaki', 'Salmon', 'Crimson', 'Aqua', 'Chartreuse', 'Fuchsia', 'Gray',
+            'DarkGreen', 'DarkBlue', 'DarkRed', 'DarkOrange', 'DarkViolet', 'LightBlue', 'LightGreen', 'LightPink', 'LightYellow', 'LightGray'
+        ]
         self.assignments_count = 0
         self.backtracks_count = 0
     
@@ -177,13 +182,14 @@ class GraphColoringCSP:
             if result and isinstance(result, dict) and len(result) == len(self.vertices):
                 # Verify it's a valid solution (0 conflicts)
                 if self.count_conflicts(result) == 0:
-                    return result
+                    return result  # Solution found, no backtrack needed
             
             # Check max assignments
             if hasattr(self, 'max_assignments') and self.assignments_count >= self.max_assignments:
                 return None
             
-            # Backtrack: remove assignment
+            # Backtrack: remove assignment (only if no solution found)
+            # This means we tried this color and it didn't lead to a solution
             del assignment[vertex]
             self.backtracks_count += 1
         
@@ -340,9 +346,10 @@ class GraphColoringCSP:
                 # If we got a complete solution, verify and return it
                 if isinstance(result, dict) and len(result) == len(self.vertices):
                     if self.count_conflicts(result) == 0:
-                        return result
+                        return result  # Solution found, no backtrack needed
             
-            # Backtrack: remove assignment
+            # Backtrack: remove assignment (only if no solution found)
+            # This means we tried this color and it didn't lead to a solution
             del assignment[vertex]
             self.backtracks_count += 1
         

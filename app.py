@@ -316,6 +316,14 @@ def _compare_algorithms(graph, num_colors, initial_temp, min_temp, max_iteration
     
     with col2:
         st.subheader("CSP (Backtracking)")
+        csp_result = None
+        csp_time = 0
+        csp_conflicts = 0
+        csp_assignments = 0
+        csp_backtracks = 0
+        csp_stop = "error"
+        csp_solver = None
+        
         try:
             csp_start = time.time()
             csp_solver = GraphColoringCSP(graph, num_colors)
@@ -406,6 +414,9 @@ def _compare_algorithms(graph, num_colors, initial_temp, min_temp, max_iteration
     st.session_state['algorithm'] = 'COMPARE'
     st.session_state['sa_time'] = sa_time if 'sa_time' in locals() else 0
     st.session_state['csp_time'] = csp_time if 'csp_time' in locals() else 0
+    # Store CSP metrics from comparison (variables are defined before try block, so always available)
+    st.session_state['assignments_count'] = csp_assignments
+    st.session_state['backtracks_count'] = csp_backtracks
     
     status_placeholder.success("✅ Comparison completed!")
 
@@ -488,7 +499,7 @@ def main():
     
     # SA Parameters
     st.sidebar.subheader("2. Simulated Annealing Parameters")
-    num_colors = st.sidebar.slider("Number of Colors", min_value=2, max_value=10, value=3)
+    num_colors = st.sidebar.slider("Number of Colors", min_value=2, max_value=20, value=3)
     initial_temp = st.sidebar.slider("Initial Temperature", min_value=1.0, max_value=2000.0, value=1000.0, step=10.0)
     min_temp = st.sidebar.slider("Minimum Temperature (Stop Threshold)", min_value=0.1, max_value=10.0, value=2.0, step=0.1,
                                   help="Algorithm stops when temperature reaches this value")
